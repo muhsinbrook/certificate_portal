@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Portal</title>
+
+    <link rel="stylesheet"
+          href="{% static 'certificateapp/css/style.css' %}">
+</head>
+
+<body>
+
+<div class="form-wrapper">
+
+    <h1>Certificate Portal</h1>
+
+    <p class="subtitle">
+        Generate and verify certificates easily
+    </p>
+
+    <div style="display:flex; gap:15px; flex-direction:column;">
+
+        <a href="{% url 'certificateapp:generate_certificate' %}"
+           class="btn btn-primary"
+           style="text-align:center; text-decoration:none;">
+            Generate Certificate
+        </a>
+
+        <a href="{% url 'certificateapp:verify_certificate' %}"
+           class="btn btn-secondary"
+           style="text-align:center; text-decoration:none;">
+            Verify Certificate
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Certificate</title>
+
+    <link rel="stylesheet"
+          href="{% static 'certificateapp/css/style.css' %}">
+</head>
+
+<body>
+
+<div class="form-wrapper">
+
+    <h1>Verify Certificate</h1>
+
+    <p class="subtitle">
+        Enter the certificate number to verify its authenticity.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="field">
+            <label for="certificate_id">
+                Certificate Number
+            </label>
+
+            <input
+                type="text"
+                id="certificate_id"
+                name="certificate_id"
+                placeholder="CERT-XXXXXXXX"
+                required
+            >
+        </div>
+
+        <button type="submit" class="btn-generate">
+            Verify Certificate
+        </button>
+    </form>
+
+    {% if searched %}
+
+        {% if certificate %}
+
+            <div style="margin-top:30px; padding:20px;
+                        border:1px solid #ccc; border-radius:8px;">
+
+                <h2>✓ Certificate Valid</h2>
+
+                <p>
+                    <strong>Certificate ID:</strong>
+                    {{ certificate.certificate_id }}
+                </p>
+
+                <p>
+                    <strong>Recipient:</strong>
+                    {{ certificate.recipient_name }}
+                </p>
+
+                <p>
+                    <strong>Program:</strong>
+                    {{ certificate.program_name }}
+                </p>
+
+                <p>
+                    <strong>College:</strong>
+                    {{ certificate.college_name }}
+                </p>
+
+                <p>
+                    <strong>Issue Date:</strong>
+                    {{ certificate.issue_date|date:"F j, Y" }}
+                </p>
+
+                <a
+                    href="{% url 'certificateapp:view_certificate' certificate.certificate_id %}"
+                    class="btn btn-primary"
+                    style="display:inline-block;
+                           margin-top:10px;
+                           text-decoration:none;"
+                >
+                    View Certificate
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <div style="margin-top:30px;
+                        padding:20px;
+                        border:1px solid #ccc;
+                        border-radius:8px;">
+
+                <h2>✗ Certificate Not Found</h2>
+
+                <p>
+                    No certificate was found with that certificate number.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

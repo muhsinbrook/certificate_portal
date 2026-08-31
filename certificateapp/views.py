@@ -1,51 +1,61 @@
-from datetime import date
-from django.shortcuts import render, redirect
-from django.contrib import messages
-
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import CertificateForm
 from .models import CertificateApp
 
+def home(request):
+    return render(request, "home.html")
 
 def generate_certificate(request):
     if request.method == "POST":
-        recipient_name = request.POST.get("recipient_name", "").strip()
-        program_name = request.POST.get("program_name", "").strip()
-        college_name = request.POST.get("college_name", "Springfield College").strip()
-        dean_name = request.POST.get("dean_name", "Dr. Emily Carter").strip()
-        registrar_name = request.POST.get("registrar_name", "Dr. Michael Reyes").strip()
-        issue_date = request.POST.get("issue_date") or date.today().isoformat()
+        form = CertificateForm(request.POST)
 
-        if not recipient_name or not program_name:
-            messages.error(request, "Please fill in both the recipient name and program name.")
-            return render(request, "certificateapp/generate.html")
+        if form.is_valid():
+            certificate = form.save()
 
-        cert = CertificateApp.objects.create(
-            recipient_name=recipient_name,
-            program_name=program_name,
-            college_name=college_name or "Springfield College",
-            dean_name=dean_name or "Dr. Emily Carter",
-            registrar_name=registrar_name or "Dr. Michael Reyes",
-            issue_date=issue_date,
-        )
+            return redirect(
+                "certificateapp:view_certificate",
+                certificate_id=certificate.certificate_id,
+            )
+    else:
+        form = CertificateForm()
 
-        request.session["last_certificate_id"] = cert.certificate_id
-        request.session["just_generated"] = True
-
-        return redirect("certificateapp:view_certificate", certificate_id=cert.certificate_id)
-
-    return render(request, "certificateapp/generate.html")
+    return render(
+        request,
+        "certificate_gen.html",
+        {"form": form},
+    )
 
 
 def view_certificate(request, certificate_id):
-    try:
-        cert = CertificateApp.objects.get(certificate_id=certificate_id)
-    except CertificateApp.DoesNotExist:
-        messages.error(request, "That certificate could not be found.")
-        return redirect("certificateapp:generate_certificate")
+    cert = get_object_or_404(
+        CertificateApp,
+        certificate_id=certificate_id,
+    )
 
-    just_generated = request.session.pop("just_generated", False)
+    return render(
+        request,
+        "certificate.html",
+        {"cert": cert},
+    )
 
-    context = {
-        "cert": cert,
-        "just_generated": just_generated,
-    }
-    return render(request, "certificateapp/certificate.html", context)
+def verify_certificate(request):
+    certificate = None
+    searched = False
+
+    if request.method == "POST":
+        certificate_id = request.POST.get("certificate_id", "").strip()
+        searched = True
+
+        if certificate_id:
+            certificate = CertificateApp.objects.filter(
+                certificate_id=certificate_id
+            ).first()
+
+    return render(
+        request,
+        "verify.html",
+        {
+            "certificate": certificate,
+            "searched": searched,
+        },
+    )

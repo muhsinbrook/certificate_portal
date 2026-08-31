@@ -1,0 +1,300 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Georgia, "Times New Roman", serif;
+    background: #f3f1eb;
+    color: #222;
+}
+
+.form-wrapper {
+    width: min(700px, 100%);
+    margin: 40px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+}
+
+.form-wrapper h1 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: #777;
+}
+
+.btn-generate {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-generate:hover {
+    opacity: 0.9;
+}
+
+.messages {
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 6px;
+}
+
+.form-errors {
+    margin-bottom: 20px;
+    padding: 12px;
+    background: #ffe5e5;
+    color: #a00000;
+    border-radius: 6px;
+}
+
+/* Certificate */
+
+.page-actions {
+    max-width: 1100px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.back-link {
+    color: #333;
+    text-decoration: none;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: #ddd;
+}
+
+.btn-primary {
+    background: #222;
+    color: white;
+}
+
+#certificate-capture-area {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.certificate {
+    width: 100%;
+    min-height: 700px;
+    padding: 25px;
+    background: #fffdf5;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.border-outer {
+    height: 100%;
+    min-height: 650px;
+    padding: 12px;
+    border: 5px double #222;
+}
+
+.border-inner {
+    min-height: 610px;
+    padding: 55px 60px;
+    border: 1px solid #555;
+    text-align: center;
+    position: relative;
+}
+
+.institution {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.certificate .subtitle {
+    margin-bottom: 35px;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.title-underline {
+    width: 180px;
+    height: 2px;
+    background: #222;
+    margin: 15px auto 30px;
+}
+
+.presented-to {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.recipient-name {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.description {
+    max-width: 800px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.program-name {
+    font-weight: bold;
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 45px;
+    font-size: 15px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 70px;
+}
+
+.sign-block,
+.date-block {
+    flex: 1;
+}
+
+.sign-line {
+    min-height: 30px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #222;
+    font-weight: bold;
+}
+
+.sign-role {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.seal {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    width: 85px;
+    height: 85px;
+    border: 3px solid #222;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 10px;
+    }
+
+    .form-wrapper {
+        padding: 25px;
+    }
+
+    .page-actions {
+        flex-direction: column;
+    }
+
+    .download-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .border-inner {
+        padding: 40px 20px;
+    }
+
+    .institution {
+        font-size: 22px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .recipient-name {
+        font-size: 28px;
+    }
+
+    .details-row,
+    .footer {
+        flex-direction: column;
+        gap: 25px;
+    }
+}
+
+@media print {
+    body {
+        padding: 0;
+        background: white;
+    }
+
+    .page-actions,
+    #confetti-canvas {
+        display: none !important;
+    }
+
+    #certificate-capture-area {
+        max-width: none;
+    }
+
+    .certificate {
+        box-shadow: none;
+    }
+}
