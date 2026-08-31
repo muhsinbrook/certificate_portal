@@ -36,7 +36,6 @@ class CertificateForm(forms.ModelForm):
             "program_name",
             "college_name",
             "dean_name",
-            "registrar_name",
             "issue_date",
         ]
 
@@ -44,17 +43,13 @@ class CertificateForm(forms.ModelForm):
             "recipient_name": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Jane A. Doe",
+                    "placeholder": "Recipient Name",
                 }
             ),
             "dean_name": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                }
-            ),
-            "registrar_name": forms.TextInput(
-                attrs={
-                    "class": "form-control",
+                    "placeholder": "Principal / Dean Name",
                 }
             ),
             "issue_date": forms.DateInput(
