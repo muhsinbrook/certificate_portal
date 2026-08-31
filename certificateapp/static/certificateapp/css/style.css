@@ -40,17 +40,39 @@ body {
     font-weight: bold;
 }
 
-.field input {
+.field input,
+.field select {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 15px;
+    font-family: inherit;
+    background: white;
 }
 
-.field input:focus {
+.field input:disabled {
+    color: #555;
+    background: #f3f3f3;
+    cursor: not-allowed;
+}
+
+.field input:focus,
+.field select:focus {
     outline: none;
     border-color: #777;
+}
+
+.field-error {
+    margin-top: 6px;
+    color: #a00000;
+    font-size: 14px;
+}
+
+.field-error ul,
+.form-errors ul {
+    margin: 0;
+    padding-left: 20px;
 }
 
 .btn-generate {
@@ -66,6 +88,31 @@ body {
 
 .btn-generate:hover {
     opacity: 0.9;
+}
+
+.btn-generate:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    vertical-align: -3px;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.btn-generate.loading .spinner {
+    display: inline-block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .messages {
@@ -153,10 +200,6 @@ body {
     margin-bottom: 8px;
 }
 
-.certificate .subtitle {
-    margin-bottom: 35px;
-}
-
 .title {
     font-size: 40px;
     font-weight: bold;
@@ -201,14 +244,13 @@ body {
 
 .footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 30px;
     margin-top: 70px;
 }
 
-.sign-block,
-.date-block {
-    flex: 1;
+.sign-block {
+    width: min(360px, 100%);
 }
 
 .sign-line {
@@ -262,6 +304,7 @@ body {
 
     .institution {
         font-size: 22px;
+        padding-right: 45px;
     }
 
     .title {
@@ -277,9 +320,18 @@ body {
         flex-direction: column;
         gap: 25px;
     }
+
+    .sign-block {
+        width: 100%;
+    }
 }
 
 @media print {
+    @page {
+        size: landscape;
+        margin: 0;
+    }
+
     body {
         padding: 0;
         background: white;
