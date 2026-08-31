@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate - {{ cert.recipient_name }}</title>
+  <link rel="stylesheet" href="{% static 'certificateapp/css/style.css' %}">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body
+  data-just-generated="{% if just_generated %}true{% else %}false{% endif %}"
+  data-certificate-id="{{ cert.certificate_id }}"
+>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="page-actions">
+    <a class="back-link" href="{% url 'certificateapp:generate_certificate' %}">&larr; Generate another certificate</a>
+    <div class="download-buttons">
+      <button class="btn btn-secondary" id="print-btn">Print</button>
+      <button class="btn btn-secondary" id="download-png-btn">Download PNG</button>
+      <button class="btn btn-primary" id="download-pdf-btn">Download PDF</button>
+    </div>
+  </div>
+
+  <div id="certificate-capture-area">
+    <div class="certificate {% if just_generated %}entrance{% endif %}">
+      <div class="border-outer">
+        <div class="border-inner">
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+
+          <div class="seal">OFFICIAL<br>SEAL</div>
+
+          <div class="institution">{{ cert.college_name }}</div>
+          <div class="subtitle">Office of the Registrar</div>
+
+          <div class="title">Certificate of Completion</div>
+          <div class="title-underline"></div>
+
+          <div class="presented-to">This certificate is proudly presented to</div>
+          <div class="recipient-name">{{ cert.recipient_name }}</div>
+
+          <div class="description">
+            for successfully completing all requirements of the
+            <span class="program-name">{{ cert.program_name }}</span>
+            program, demonstrating outstanding dedication, academic excellence,
+            and commitment throughout the course of study.
+          </div>
+
+          <div class="details-row">
+            <div>Graduation Date: <strong>{{ cert.issue_date|date:"F j, Y" }}</strong></div>
+            <div>Certificate No: <strong>{{ cert.certificate_id }}</strong></div>
+          </div>
+
+          <div class="footer">
+            <div class="sign-block">
+              <div class="sign-line">{{ cert.dean_name }}</div>
+              <div class="sign-role">College Dean</div>
+            </div>
+
+            <div class="date-block">
+              <div class="sign-line">{{ cert.issue_date|date:"F j, Y" }}</div>
+              <div class="sign-role">Date Issued</div>
+            </div>
+
+            <div class="sign-block">
+              <div class="sign-line">{{ cert.registrar_name }}</div>
+              <div class="sign-role">Registrar</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'certificateapp/js/certificate.js' %}"></script>
+</body>
+</html>

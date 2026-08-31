@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Certificate</title>
+  <link rel="stylesheet" href="{% static 'certificateapp/css/style.css' %}">
+</head>
+<body>
+
+  <div class="form-wrapper">
+    <h1>Certificate Generator</h1>
+    <p class="subtitle">Fill in the details below</p>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form id="generate-form" method="post" action="{% url 'certificateapp:generate_certificate' %}">
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="recipient_name">Recipient Name</label>
+        <input type="text" id="recipient_name" name="recipient_name" placeholder="Jane A. Doe" required>
+      </div>
+
+      <div class="field">
+        <label for="program_name">Program / Course Name</label>
+        <input type="text" id="program_name" name="program_name" placeholder="Bachelor of Science in Computer Science" required>
+      </div>
+
+      <div class="field">
+        <label for="college_name">College Name</label>
+        <input type="text" id="college_name" name="college_name" value="Springfield College">
+      </div>
+
+      <div class="field">
+        <label for="dean_name">Dean Name</label>
+        <input type="text" id="dean_name" name="dean_name" value="Dr. Emily Carter">
+      </div>
+
+      <div class="field">
+        <label for="registrar_name">Registrar Name</label>
+        <input type="text" id="registrar_name" name="registrar_name" value="Dr. Michael Reyes">
+      </div>
+
+      <div class="field">
+        <label for="issue_date">Issue Date</label>
+        <input type="date" id="issue_date" name="issue_date">
+      </div>
+
+      <button type="submit" class="btn-generate" id="generate-btn">
+        <span class="btn-text">Generate Certificate</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+  </div>
+
+  <script src="{% static 'certificateapp/js/generate.js' %}"></script>
+</body>
+</html>
