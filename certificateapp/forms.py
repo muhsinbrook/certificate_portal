@@ -1,5 +1,6 @@
 from django import forms
-from .models import CertificateApp
+
+from .models import COLLEGE_NAME, CertificateApp
 
 
 class CertificateForm(forms.ModelForm):
@@ -19,14 +20,22 @@ class CertificateForm(forms.ModelForm):
     )
 
     college_name = forms.CharField(
-        initial="Model Polytechnic College Karunagappally",
+        initial=COLLEGE_NAME,
+        disabled=True,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        label="College Name",
+    )
+
+    principal_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "readonly": "readonly",
+                "placeholder": "Principal Name",
+                "autocomplete": "name",
             }
         ),
-        label="College Name",
+        label="Principal Name",
+        max_length=150,
     )
 
     class Meta:
@@ -35,30 +44,30 @@ class CertificateForm(forms.ModelForm):
             "recipient_name",
             "program_name",
             "college_name",
-            "dean_name",
+            "principal_name",
             "issue_date",
         ]
-
         widgets = {
             "recipient_name": forms.TextInput(
                 attrs={
                     "class": "form-control",
                     "placeholder": "Recipient Name",
-                }
-            ),
-            "dean_name": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Principal / Dean Name",
+                    "autocomplete": "name",
                 }
             ),
             "issue_date": forms.DateInput(
+                format="%Y-%m-%d",
                 attrs={
                     "class": "form-control",
                     "type": "date",
-                }
+                },
             ),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["college_name"].initial = COLLEGE_NAME
+        self.fields["issue_date"].input_formats = ["%Y-%m-%d"]
+
     def clean_college_name(self):
-        return "Model Polytechnic College Karunagappally"
+        return COLLEGE_NAME
