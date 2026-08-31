@@ -38,7 +38,6 @@
           <div class="seal">OFFICIAL<br>SEAL</div>
 
           <div class="institution">{{ cert.college_name }}</div>
-          <div class="subtitle">Office of the Registrar</div>
 
           <div class="title">Certificate of Completion</div>
           <div class="title-underline"></div>
@@ -61,17 +60,12 @@
           <div class="footer">
             <div class="sign-block">
               <div class="sign-line">{{ cert.dean_name }}</div>
-              <div class="sign-role">College Dean</div>
+              <div class="sign-role">Principal / Dean</div>
             </div>
 
             <div class="date-block">
               <div class="sign-line">{{ cert.issue_date|date:"F j, Y" }}</div>
               <div class="sign-role">Date Issued</div>
-            </div>
-
-            <div class="sign-block">
-              <div class="sign-line">{{ cert.registrar_name }}</div>
-              <div class="sign-role">Registrar</div>
             </div>
           </div>
 
