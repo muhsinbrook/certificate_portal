@@ -8,58 +8,55 @@
   <link rel="stylesheet" href="{% static 'certificateapp/css/style.css' %}">
 </head>
 <body>
-
-  <div class="form-wrapper">
+  <main class="form-wrapper">
     <h1>Certificate Generator</h1>
     <p class="subtitle">Fill in the details below</p>
 
-    {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
+    {% if form.non_field_errors %}
+      <div class="form-errors">
+        {{ form.non_field_errors }}
+      </div>
     {% endif %}
 
-    <form id="generate-form" method="post" action="{% url 'certificateapp:generate_certificate' %}">
+    <form id="generate-form" method="post" action="{% url 'certificateapp:generate_certificate' %}" novalidate>
       {% csrf_token %}
 
       <div class="field">
-        <label for="recipient_name">Recipient Name</label>
-        <input type="text" id="recipient_name" name="recipient_name" placeholder="Jane A. Doe" required>
+        {{ form.recipient_name.label_tag }}
+        {{ form.recipient_name }}
+        {% if form.recipient_name.errors %}<div class="field-error">{{ form.recipient_name.errors }}</div>{% endif %}
       </div>
 
       <div class="field">
-        <label for="program_name">Program / Course Name</label>
-        <input type="text" id="program_name" name="program_name" placeholder="Bachelor of Science in Computer Science" required>
+        {{ form.program_name.label_tag }}
+        {{ form.program_name }}
+        {% if form.program_name.errors %}<div class="field-error">{{ form.program_name.errors }}</div>{% endif %}
       </div>
 
       <div class="field">
-        <label for="college_name">College Name</label>
-        <input type="text" id="college_name" name="college_name" value="Springfield College">
+        {{ form.college_name.label_tag }}
+        {{ form.college_name }}
+        {% if form.college_name.errors %}<div class="field-error">{{ form.college_name.errors }}</div>{% endif %}
       </div>
 
       <div class="field">
-        <label for="dean_name">Dean Name</label>
-        <input type="text" id="dean_name" name="dean_name" value="Dr. Emily Carter">
+        {{ form.principal_name.label_tag }}
+        {{ form.principal_name }}
+        {% if form.principal_name.errors %}<div class="field-error">{{ form.principal_name.errors }}</div>{% endif %}
       </div>
 
       <div class="field">
-        <label for="registrar_name">Registrar Name</label>
-        <input type="text" id="registrar_name" name="registrar_name" value="Dr. Michael Reyes">
-      </div>
-
-      <div class="field">
-        <label for="issue_date">Issue Date</label>
-        <input type="date" id="issue_date" name="issue_date">
+        {{ form.issue_date.label_tag }}
+        {{ form.issue_date }}
+        {% if form.issue_date.errors %}<div class="field-error">{{ form.issue_date.errors }}</div>{% endif %}
       </div>
 
       <button type="submit" class="btn-generate" id="generate-btn">
         <span class="btn-text">Generate Certificate</span>
-        <span class="spinner"></span>
+        <span class="spinner" aria-hidden="true"></span>
       </button>
     </form>
-  </div>
+  </main>
 
   <script src="{% static 'certificateapp/js/certificate_gen.js' %}"></script>
 </body>
